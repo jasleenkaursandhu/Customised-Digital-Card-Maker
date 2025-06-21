@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customised Card Maker</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Customised Digital Card Maker</h1>
+            <p>Create beautiful digital cards!</p>
+        </div>
+
+        <div class="workspace">
+            <div class="toolbar">
+                <div class="tool-section">
+                    <h3>📝 Add Text</h3>
+                    <input type="text" id="textInput" placeholder="Type your message...">
+                    <button onclick="addText()">Add Text</button>
+                </div>
+
+                <div class="tool-section">
+                    <h3>🎨 Colors</h3>
+                    <div class="color-picker">
+                        <label>Text Color:</label>
+                        <input type="color" id="textColor" value="#000000">
+                    </div>
+                    <div class="color-picker">
+                        <label>Background:</label>
+                        <input type="color" id="bgColor" value="#ffffff">
+                    </div>
+                    <button onclick="changeBackground()">Change Background</button>
+                </div>
+
+                <div class="tool-section">
+                    <h3>🧹 Controls</h3>
+                    <button onclick="clearCanvas()">Clear Card</button>
+                    <button id="downloadBtn" onclick="downloadCard()">📥 Download Card</button>
+                </div>
+            </div>
+
+            <div class="canvas-area">
+                <canvas id="cardCanvas" width="400" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
