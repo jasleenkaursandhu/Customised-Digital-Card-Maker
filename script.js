@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 
 // Keep track of text elements and drag state
 let textElements = [];
+let selectedText = null;
 let isDragging = false;
 let draggedText = null;
 let dragOffset = { x: 0, y: 0 };
@@ -93,6 +94,10 @@ canvas.addEventListener('mousedown', function(event) {
     const clickedText = getTextAtPosition(mouseX, mouseY);
     
     if (clickedText) {
+        // SELECT the text (this was missing!)
+        selectedText = clickedText;
+        
+        // Prepare for dragging
         isDragging = true;
         draggedText = clickedText;
         
@@ -101,6 +106,11 @@ canvas.addEventListener('mousedown', function(event) {
         dragOffset.y = mouseY - clickedText.y;
         
         canvas.style.cursor = 'grabbing';
+        drawCard(); // Redraw to show selection border
+    } else {
+        // Clicked on empty space - deselect
+        selectedText = null;
+        drawCard();
     }
 });
 
@@ -167,8 +177,25 @@ function drawCard() {
         ctx.fillStyle = textObj.color;
         ctx.font = `${textObj.size}px Arial`;
         ctx.fillText(textObj.text, textObj.x, textObj.y);
+        
+        // Draw selection indicator if this text is selected
+        if (textObj === selectedText) {
+            const dimensions = getTextDimensions(textObj);
+            ctx.strokeStyle = '#007bff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(textObj.x - 2, textObj.y - dimensions.height - 2, 
+                          dimensions.width + 4, dimensions.height + 4);
+        }
     });
 }
+
+// Color picker event - change selected text color
+document.getElementById('textColor').addEventListener('change', function() {
+    if (selectedText) {
+        selectedText.color = this.value;
+        drawCard(); // Redraw immediately with new color
+    }
+});
 
 // Function to clear the canvas
 function clearCanvas() {
